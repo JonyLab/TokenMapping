@@ -74,7 +74,7 @@ cp .env.example .env
 ```env
 SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_ANON_KEY=your-publishable-or-anon-key
-PORT=3000
+PORT=55872
 ```
 
 启动应用：
@@ -86,10 +86,10 @@ npm run dev
 打开：
 
 ```text
-http://localhost:3000
+http://localhost:55872
 ```
 
-如果没有设置 `PORT`，服务会默认运行在 `55872`。
+如果使用默认配置，服务会运行在 `http://localhost:55872`；如果你改了 `PORT`，请打开对应端口。
 
 ## Supabase 配置
 
@@ -100,8 +100,8 @@ http://localhost:3000
    - GitHub
    - Google
 5. 配置本地开发用的认证 URL：
-   - Site URL: `http://localhost:3000`
-   - Redirect URL: `http://localhost:3000`
+   - Site URL: `http://localhost:55872`
+   - Redirect URL: `http://localhost:55872`
 
 数据库结构包含：
 
@@ -226,7 +226,7 @@ Fill in your Supabase credentials in `.env`:
 ```env
 SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_ANON_KEY=your-publishable-or-anon-key
-PORT=3000
+PORT=55872
 ```
 
 Run the app:
@@ -238,10 +238,10 @@ npm run dev
 Open:
 
 ```text
-http://localhost:3000
+http://localhost:55872
 ```
 
-If `PORT` is not set, the server defaults to `55872`.
+With the default configuration, the app runs at `http://localhost:55872`. If you change `PORT`, open the matching port instead.
 
 ## Supabase Setup
 
@@ -252,8 +252,8 @@ If `PORT` is not set, the server defaults to `55872`.
    - GitHub
    - Google
 5. Configure auth URLs for local development:
-   - Site URL: `http://localhost:3000`
-   - Redirect URL: `http://localhost:3000`
+   - Site URL: `http://localhost:55872`
+   - Redirect URL: `http://localhost:55872`
 
 The schema creates:
 

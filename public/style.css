@@ -67,11 +67,11 @@ body {
 .workspace {
   flex: 1;
   overflow: auto;
-  padding: 28px 32px 80px;
+  padding: 0;
 }
 /* On very wide screens, cap total layout width and center it */
 @media (min-width: 1600px) {
-  .workspace { padding-left: max(32px, calc((100% - 1536px) / 2)); padding-right: max(32px, calc((100% - 1536px) / 2)); }
+  .workspace { padding-left: 0; padding-right: 0; }
 }
 
 /* ── LAYOUT ──────────────────────────────────── */
@@ -79,8 +79,9 @@ body {
   position: relative;
   display: grid;
   width: 100%;
+  min-height: calc(100vh - 50px);
   min-width: 860px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .layout > svg#lines {
@@ -94,31 +95,67 @@ body {
 
 /* ── COLUMNS ─────────────────────────────────── */
 .col { position: relative; }
-.col-level { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.col-level {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 0; min-height: calc(100vh - 50px);
+  position: relative;
+  border-right: 1px solid var(--border);
+}
+.col-level::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms;
+}
+.col-level:hover::before { opacity: 1; }
 .col-add-slot {
-  display: flex; align-items: flex-start; justify-content: center;
+  width: 126px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
   align-self: stretch;
+  gap: 12px;
   padding: 0 10px;
+  color: var(--text-3);
+  position: sticky;
+  top: calc(50vh - 50px);
+  height: 100px;
 }
 .btn-add-level-canvas {
-  position: sticky; top: calc(50vh - 14px);
-  width: 28px; height: 28px;
+  width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
-  border: 1.5px dashed color-mix(in srgb, var(--border) 80%, transparent);
-  background: transparent; color: var(--text-3);
+  border: 1px solid var(--border);
+  background: var(--card); color: #111827;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   font-size: 16px; line-height: 1; cursor: pointer; padding: 0;
-  font-family: var(--font); opacity: 0.5;
-  transition: opacity 150ms, border-color 150ms, background 150ms;
+  font-family: var(--font);
+  transition: border-color 150ms, background 150ms, box-shadow 150ms;
 }
-.btn-add-level-canvas:hover { opacity: 1; border-style: solid; border-color: var(--border-h); background: var(--card); }
+.btn-add-level-canvas:hover {
+  border-color: var(--border-h);
+  background: #FAF7F4;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.col-add-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+}
 
-.col-inner { display: flex; flex-direction: column; align-items: stretch; min-width: 200px; }
+.col-inner {
+  display: flex; flex-direction: column; align-items: stretch;
+  width: min(256px, calc(100% - 32px));
+  min-width: 0; position: relative; z-index: 1;
+  padding-top: 36px;
+}
 .col-head {
-  font-size: 11.5px; color: var(--text-3);
-  font-weight: 500; letter-spacing: 0.02em;
-  margin-bottom: 14px;
-  height: 20px;
+  font-size: 14px; color: var(--text);
+  font-weight: 700; letter-spacing: 0;
+  margin-bottom: 28px;
+  height: 24px;
   display: flex; align-items: center;
 }
 .col-head-label {
@@ -155,6 +192,8 @@ body {
 .token {
   height: var(--row-h);
   display: flex; align-items: center; gap: 8px;
+  width: 100%;
+  min-width: 0;
   padding: 0 10px;
   background: var(--card);
   border: 1px solid var(--border);
@@ -187,14 +226,20 @@ body {
   font-family: var(--mono);
   color: var(--text);
   white-space: nowrap;
-  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 .tok-hex {
   font-size: 10.5px;
   font-family: var(--mono);
   color: var(--text-3);
   flex-shrink: 0;
-  margin-left: auto;
+  max-width: 76px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   letter-spacing: 0.01em;
 }
 .tok-warn-icon {
@@ -242,11 +287,8 @@ body {
 
 /* ── MAPPING EMPTY STATE ─────────────────────── */
 .map-empty {
-  min-height: 164px;
+  min-height: calc(100vh - 206px);
   padding: 22px 14px;
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--card) 58%, transparent);
   color: var(--text-2);
   display: flex;
   flex-direction: column;
@@ -255,17 +297,8 @@ body {
   text-align: center;
   gap: 8px;
 }
-.map-empty-icon {
-  width: 30px; height: 30px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text-3);
-  display: flex; align-items: center; justify-content: center;
-}
-.map-empty-icon svg { width: 15px; height: 15px; }
 .map-empty-title {
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text);
 }
@@ -280,14 +313,14 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  margin-top: 2px;
+  margin-top: 12px;
 }
 .map-empty-btn,
 .map-empty-link {
   height: 26px;
-  padding: 0 10px;
+  padding: 0 12px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 13px;
   font-family: var(--font);
   font-weight: 600;
   cursor: pointer;
@@ -1169,6 +1202,39 @@ body.drawing-mode * { cursor: crosshair !important; }
   padding: 32px 16px; text-align: center;
   font-size: 12.5px; color: var(--text-3);
 }
+.be-empty-action {
+  height: 100%;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.be-empty-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.be-empty-copy {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-3);
+}
+.be-empty-btn {
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 12px;
+  font-family: var(--font);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms;
+}
+.be-empty-btn:hover { border-color: var(--border-h); background: #FAF7F4; }
 
 /* ── Inline alias picker dropdown ─────────────────────────── */
 .be-vdd {
