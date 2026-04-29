@@ -43,13 +43,16 @@ Token Mapping 是一个轻量级设计 Token 映射平台，用于在多个 Coll
 
 ```text
 .
-├── index.html       # 应用页面与 UI 结构
-├── main.js          # Token 编辑、导入导出、Supabase 逻辑
-├── style.css        # 应用样式
+├── public/
+│   ├── index.html   # 应用页面与 UI 结构
+│   ├── main.js      # Token 编辑、导入导出、Supabase 逻辑
+│   ├── style.css    # 应用样式
+│   └── logo.png
+├── api/
+│   └── config.js    # Vercel 环境变量配置接口
 ├── server.js        # Express 服务与运行时配置接口
 ├── schema.sql       # Supabase 数据表与 RLS 策略
-├── .env.example     # 环境变量模板
-└── logo.png
+└── .env.example     # 环境变量模板
 ```
 
 ## 本地运行
@@ -192,13 +195,16 @@ It is built as a browser-first single-page app. Express serves the static app an
 
 ```text
 .
-├── index.html       # App shell and UI markup
-├── main.js          # Token editor, import/export, Supabase logic
-├── style.css        # Application styling
+├── public/
+│   ├── index.html   # App shell and UI markup
+│   ├── main.js      # Token editor, import/export, Supabase logic
+│   ├── style.css    # Application styling
+│   └── logo.png
+├── api/
+│   └── config.js    # Vercel environment config endpoint
 ├── server.js        # Express server and runtime config endpoint
 ├── schema.sql       # Supabase tables and RLS policies
-├── .env.example     # Environment variable template
-└── logo.png
+└── .env.example     # Environment variable template
 ```
 
 ## Getting Started

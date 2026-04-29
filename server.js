@@ -4,6 +4,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 55872;
+const publicDir = path.join(__dirname, 'public');
 
 app.get('/api/config', (req, res) => {
   res.json({
@@ -12,11 +13,19 @@ app.get('/api/config', (req, res) => {
   });
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(publicDir));
 
-app.listen(PORT, () => {
-  console.log(`\nToken Mapping running at http://localhost:${PORT}`);
-  if (!process.env.SUPABASE_URL) {
-    console.log('⚠️  Supabase not configured. Copy .env.example to .env and add credentials.\n');
-  }
+app.get('*', (req, res) => {
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\nToken Mapping running at http://localhost:${PORT}`);
+    if (!process.env.SUPABASE_URL) {
+      console.log('⚠️  Supabase not configured. Copy .env.example to .env and add credentials.\n');
+    }
+  });
+}
+
+module.exports = app;
