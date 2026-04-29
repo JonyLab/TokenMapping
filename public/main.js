@@ -137,6 +137,42 @@ function renderGroupedList(tokArr, li, renderItem) {
   return html;
 }
 
+function renderMappingEmptyState(li, levelName, isFiltered, isProjectEmpty) {
+  if (isFiltered) {
+    return `<div class="map-empty">
+      <div class="map-empty-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="7" cy="7" r="4"/><path d="M10 10l3 3"/>
+        </svg>
+      </div>
+      <div class="map-empty-title">筛选下暂无相关 Variable</div>
+      <div class="map-empty-copy">当前 Token 在 ${levelName} 中还没有关联项。</div>
+      <button class="map-empty-btn" onclick="clearFocusToken()">退出筛选</button>
+    </div>`;
+  }
+
+  const guide = li === 0
+    ? '从基础色开始，添加第一个 Primitive Variable。'
+    : '添加或关联上游 Variable，继续搭建这一层映射。';
+  const importAction = isProjectEmpty
+    ? `<button class="map-empty-link" onclick="openImportModal()">导入一批 Token</button>`
+    : '';
+
+  return `<div class="map-empty">
+    <div class="map-empty-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 2v12"/><path d="M2 8h12"/>
+      </svg>
+    </div>
+    <div class="map-empty-title">暂无 Variable</div>
+    <div class="map-empty-copy">${guide}</div>
+    <div class="map-empty-actions">
+      <button class="map-empty-btn primary" onclick="openModal(${li})">添加 Variable</button>
+      ${importAction}
+    </div>
+  </div>`;
+}
+
 // ══════════════════════════════════════════════════════════════
 //  TOKEN LOOKUP UTILITIES
 // ══════════════════════════════════════════════════════════════
@@ -263,6 +299,11 @@ function renderLevel(li) {
   const visibleTokens = _related
     ? tokens[li].filter(t => _related.sets[li] && _related.sets[li].has(t.id))
     : tokens[li];
+  if (!visibleTokens.length) {
+    const isProjectEmpty = tokens.every(arr => !arr.length);
+    listEl.innerHTML = renderMappingEmptyState(li, levels[li]?.name || 'Collection', !!_related, isProjectEmpty);
+    return;
+  }
   listEl.innerHTML = renderGroupedList(visibleTokens, li, tok => renderTokenCard(tok, li, isFirst, isLast));
 }
 
