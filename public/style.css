@@ -982,6 +982,38 @@ body.drawing-mode * { cursor: crosshair !important; }
   padding: 1px 5px; border-radius: 8px;
   font-weight: 500; flex-shrink: 0;
 }
+.be-add-coll {
+  width: calc(100% - 16px);
+  margin: 8px 8px 0;
+  padding: 7px 8px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-family: var(--font);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, color 120ms;
+}
+.be-add-coll:hover {
+  background: rgba(0,0,0,0.04);
+  border-color: var(--border-h);
+  color: var(--text);
+}
+.be-add-coll-plus {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
 
 /* Main content area */
 .be-main {

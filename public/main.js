@@ -156,8 +156,8 @@ function renderMappingEmptyState(li, levelName, isFiltered, isProjectEmpty) {
 function renderBatchEmptyState(li, levelName) {
   return `<div class="be-empty be-empty-action">
     <div class="be-empty-title">此 Collection 暂无 Variable</div>
-    <div class="be-empty-copy">${levelName} 还没有可批量编辑的变量。</div>
-    <button class="be-empty-btn" onclick="openModal(${li})">添加变量</button>
+    <div class="be-empty-copy">${levelName} 还没有可批量编辑的 Variable。</div>
+    <button class="be-empty-btn" onclick="openModal(${li})">添加 Variable</button>
   </div>`;
 }
 
@@ -656,6 +656,21 @@ function addLevel() {
     collapsedGroups.push(new Set());
     renderedLevelCount = 0;
     render();
+    scheduleSave();
+  });
+}
+
+function addLevelFromBatchEditor() {
+  openLevelModal('新建 Collection', `Collection ${levels.length + 1}`, name => {
+    levels.push({ id: `L${levels.length}`, name });
+    tokens.push([]);
+    collapsedGroups.push(new Set());
+    batchEditorLevelIdx = levels.length - 1;
+    _beSearchQuery = '';
+    _beFocusedId = null;
+    renderedLevelCount = 0;
+    render();
+    renderBatchEditor();
     scheduleSave();
   });
 }
@@ -1923,7 +1938,10 @@ function renderBatchEditor() {
         <span class="be-coll-name">${lev.name}</span>
         <span class="be-coll-count">${tokens[i].length}</span>
       </div>`
-    ).join('');
+    ).join('') + `<button class="be-add-coll" onclick="addLevelFromBatchEditor()">
+      <span class="be-add-coll-plus">＋</span>
+      <span>添加 Collection</span>
+    </button>`;
   }
   // Table
   const body = document.getElementById('be-table-body');

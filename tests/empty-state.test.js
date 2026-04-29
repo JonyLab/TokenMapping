@@ -32,5 +32,5 @@ assert.doesNotMatch(filteredEmpty, /map-empty-copy/);
 
 const batchEmpty = context.renderBatchEmptyState(1, 'Semantic');
 assert.match(batchEmpty, /此 Collection 暂无 Variable/);
-assert.match(batchEmpty, /添加变量/);
+assert.match(batchEmpty, /添加 Variable/);
 assert.match(batchEmpty, /openModal\(1\)/);
