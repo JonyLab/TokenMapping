@@ -6,6 +6,20 @@ Token Mapping 是一个轻量级设计 Token 映射平台，用于在多个 Coll
 
 它采用浏览器优先的单页应用形态，后端使用 Express 提供静态服务和运行时配置接口，用户认证与数据持久化由 Supabase 提供。
 
+## 界面预览
+
+### Token 映射总览
+
+![Token 映射总览](docs/images/token-map-overview.png)
+
+### 相关 Token 筛选视图
+
+![相关 Token 筛选视图](docs/images/token-focus-view.png)
+
+### 批量编辑器
+
+![批量编辑器](docs/images/token-batch-editor.png)
+
 ## 功能特性
 
 - 按用户管理多个 Token Mapping 项目。
@@ -140,6 +154,20 @@ npm start
 Token Mapping is a lightweight design token mapping platform for organizing variables across multiple collections and linking relationships from primitive values to semantic and component-level aliases.
 
 It is built as a browser-first single-page app. Express serves the static app and runtime configuration, while Supabase provides authentication and data persistence.
+
+## Screenshots
+
+### Token Mapping Overview
+
+![Token Mapping Overview](docs/images/token-map-overview.png)
+
+### Related Token Focus View
+
+![Related Token Focus View](docs/images/token-focus-view.png)
+
+### Batch Editor
+
+![Batch Editor](docs/images/token-batch-editor.png)
 
 ## Features
 
